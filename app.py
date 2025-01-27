@@ -21,11 +21,7 @@ if "anime_data" not in st.session_state or "anime_user_ratings" not in st.sessio
 
 # Load models only once
 if "models_loaded" not in st.session_state:
-    st.session_state.models_loaded = {}
-
-    # Define your repository name
-    # models_repo = MODELS_FILEPATH
-
+    st.session_state.models_loaded = {} 
     # Load models
     st.session_state.models_loaded["cosine_similarity_model"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
     st.session_state.models_loaded["item_based_knn_model_path"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
@@ -48,32 +44,13 @@ if "models_loaded" not in st.session_state:
 anime_data = st.session_state.anime_data 
 anime_user_ratings = st.session_state.anime_user_ratings
 
-# Display dataset info
-st.write("Anime Data:")
-st.dataframe(anime_data.head())
+# # Display dataset info
+# st.write("Anime Data:")
+# st.dataframe(anime_data.head())
  
-st.write("Anime User Ratings Data:")
-st.dataframe(anime_user_ratings.head())
-
-# # Define your repository name
-# models_repo= MODELS_FILEPATH
-
-# # Load models
-
-# item_based_knn_model_path = hf_hub_download(repo_name, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
-# user_based_knn_model_path = hf_hub_download(repo_name, MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
-# svd_model_path = hf_hub_download(repo_name,MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
-
-# with open(item_based_knn_model_path, "rb") as f:
-#     item_based_knn_model = joblib.load(f)
-
-# with open(user_based_knn_model_path, "rb") as f:
-#     user_based_knn_model = joblib.load(f)
-
-# with open(svd_model_path, "rb") as f:
-#     svd_model = joblib.load(f)
-
-
+# st.write("Anime User Ratings Data:")
+# st.dataframe(anime_user_ratings.head())
+  
 # Access the models from session state
 cosine_similarity_model_path = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
 item_based_knn_model = st.session_state.models_loaded["item_based_knn_model"]
@@ -87,11 +64,11 @@ app_selector = st.sidebar.radio(
 )
 
 if app_selector == "Content-Based Recommender":
-    st.title("Content-Based Recommender System") 
+    st.title("Content-Based Recommendation System") 
     try:
         
         anime_list = anime_data["name"].tolist()
-        anime_name = st.selectbox("Select an Anime", anime_list)
+        anime_name = st.selectbox("Pick an anime..unlock similar anime recommendations..", anime_list)
 
         # Set number of recommendations
         max_recommendations = min(len(anime_data), 100)
@@ -146,17 +123,17 @@ elif app_selector == "Collaborative Recommender":
         # Sidebar for choosing the collaborative filtering method
         collaborative_method = st.sidebar.selectbox(
             "Choose a collaborative filtering method:", 
-            ["SVD Collaborative Filtering", "User-Based Collaborative Filtering", "Anime-Based KNN Collaborative Filtering"]
+            ["Surprise Collaborative Filtering", "User-Based Collaborative Filtering", "Anime-Based KNN Collaborative Filtering"]
         )
 
         # User input
         if collaborative_method == "SVD Collaborative Filtering" or collaborative_method == "User-Based Collaborative Filtering": 
-            user_ids = anime_user_ratings['user_id'].unique()  # Get unique user IDs
-            user_id = st.selectbox("Select a user ID ", user_ids) 
+            user_ids = anime_user_ratings['user_id'].unique()  
+            user_id = st.selectbox("Choose a user, and we'll show you animes they'd recommend!", user_ids) 
             n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=50, value=10)
         elif collaborative_method == "Anime-Based KNN Collaborative Filtering": 
-            anime_list = anime_user_ratings["name"].dropna().unique().tolist()  # Ensure no NaN values in anime names
-            anime_name = st.selectbox("Select an Anime", anime_list)
+            anime_list = anime_user_ratings["name"].dropna().unique().tolist() 
+            anime_name = st.selectbox("Pick an anime, and we'll suggest more titles you'll love", anime_list)
             n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=50, value=10)
    
         # Get recommendations
@@ -164,8 +141,7 @@ elif app_selector == "Collaborative Recommender":
             # Load the recommender
             recommender = CollaborativeAnimeRecommender(anime_user_ratings) 
             if collaborative_method == "SVD Collaborative Filtering": 
-                recommendations = recommender.get_svd_recommendations(user_id, n=n_recommendations, svd_model=svd_model) 
-                # st.write(recommendations.head())
+                recommendations = recommender.get_svd_recommendations(user_id, n=n_recommendations, svd_model=svd_model)  
             elif collaborative_method == "User-Based Collaborative Filtering": 
                 recommendations = recommender.get_user_based_recommendations(user_id, n_recommendations=n_recommendations, knn_user_model=user_based_knn_model)
             elif collaborative_method == "Anime-Based KNN Collaborative Filtering":
@@ -176,7 +152,7 @@ elif app_selector == "Collaborative Recommender":
             
             if isinstance(recommendations, pd.DataFrame) and not recommendations.empty:
                 if len(recommendations) < n_recommendations:
-                    st.warning(f"Only {len(recommendations)} recommendations available, fewer than the requested {n_recommendations}.")
+                    st.warning(f"Oops...Only {len(recommendations)} recommendations available, fewer than the requested {n_recommendations}.")
                 st.write(f"Here are the Collaborative Recommendations:")
                 cols = st.columns(5)
                 for i, row in enumerate(recommendations.iterrows()):
@@ -213,7 +189,7 @@ elif app_selector == "Top Anime Recommender":
         
         n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=50, value=10)
         
-        if st.button("Get Top Anime"):
+        if st.button("Get Recommendations"):
             # Load the popularity-based recommender
             recommender = PopularityBasedFiltering(anime_data)
             
