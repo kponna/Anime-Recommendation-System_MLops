@@ -2,9 +2,9 @@ import sys
 from anime_recommender.loggers.logging import logging
 from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.source.data_ingestion import DataIngestion
-from anime_recommender.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig
+from anime_recommender.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataTransformationConfig
 # ,DataTransformationConfig,CollaborativeModelConfig,ContentBasedModelConfig
-# from anime_recommender.source.data_transformation import DataTransformation
+from anime_recommender.source.data_transformation import DataTransformation
 # from anime_recommender.source.collaborative_recommenders import CollaborativeModelTrainer
 # from anime_recommender.source.content_based_recommenders import ContentBasedModelTrainer 
 # from anime_recommender.source.popularity_based_recommenders import PopularityBasedRecommendor
@@ -19,13 +19,13 @@ if __name__ == "__main__":
         logging.info(f"Data ingestion completed.")
         print(data_ingestion_artifact)
 
-        # # Data Transformation
-        # data_transformation_config = DataTransformationConfig(training_pipeline_config)
-        # data_transformation = DataTransformation(data_ingestion_artifact,data_transformation_config)
-        # logging.info("Initiating Data Transformation.")
-        # data_transformation_artifact = data_transformation.initiate_data_transformation()
-        # logging.info("Data Transformation Completed.")
-        # print(data_transformation_artifact)
+        # Data Transformation
+        data_transformation_config = DataTransformationConfig(training_pipeline_config)
+        data_transformation = DataTransformation(data_ingestion_artifact,data_transformation_config)
+        logging.info("Initiating Data Transformation.")
+        data_transformation_artifact = data_transformation.initiate_data_transformation()
+        logging.info("Data Transformation Completed.")
+        print(data_transformation_artifact)
 
         # # Collaborative Model Training
         # collaborative_model_trainer_config = CollaborativeModelConfig(training_pipeline_config)

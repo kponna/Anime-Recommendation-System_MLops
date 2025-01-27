@@ -29,3 +29,14 @@ class DataIngestionConfig:
         self.feature_store_userrating_file_path: str = os.path.join(self.data_ingestion_dir, DATA_INGESTION_FEATURE_STORE_DIR, RATING_FILE_NAME)
         self.anime_filepath: str = ANIME_FILE_PATH
         self.rating_filepath: str = RATING_FILE_PATH 
+
+class DataTransformationConfig:
+    """
+    Configuration for data transformation, including paths for transformed data and preprocessing objects.
+    """
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        """
+        Initialize data transformation paths.
+        """
+        self.data_transformation_dir:str = os.path.join(training_pipeline_config.artifact_dir,DATA_TRANSFORMATION_DIR)
+        self.merged_file_path:str = os.path.join(self.data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,MERGED_FILE_NAME)

@@ -2,3 +2,5 @@ ars/
 .env
 Artifacts/
 logs/
+__pycache__/
+model_trainer/
