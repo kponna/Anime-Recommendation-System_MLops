@@ -1,2 +1,4 @@
 ars/
 .env
+Artifacts/
+logs/
