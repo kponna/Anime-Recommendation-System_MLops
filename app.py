@@ -24,13 +24,13 @@ if "models_loaded" not in st.session_state:
     st.session_state.models_loaded = {}
 
     # Define your repository name
-    repo_name = MODELS_FILEPATH
+    # models_repo = MODELS_FILEPATH
 
     # Load models
-    st.session_state.models_loaded["cosine_similarity_model"] = hf_hub_download(repo_name, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
-    st.session_state.models_loaded["item_based_knn_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
-    st.session_state.models_loaded["user_based_knn_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
-    st.session_state.models_loaded["svd_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
+    st.session_state.models_loaded["cosine_similarity_model"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
+    st.session_state.models_loaded["item_based_knn_model_path"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
+    st.session_state.models_loaded["user_based_knn_model_path"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
+    st.session_state.models_loaded["svd_model_path"] = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
 
     # Load the models using joblib
     with open(st.session_state.models_loaded["item_based_knn_model_path"], "rb") as f:
@@ -56,7 +56,7 @@ st.write("Anime User Ratings Data:")
 st.dataframe(anime_user_ratings)
 
 # # Define your repository name
-# repo_name = "krishnaveni76/anime-recommendation-models"
+# models_repo= MODELS_FILEPATH
 
 # # Load models
 
@@ -75,7 +75,7 @@ st.dataframe(anime_user_ratings)
 
 
 # Access the models from session state
-cosine_similarity_model_path = hf_hub_download(repo_name, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
+cosine_similarity_model_path = hf_hub_download(MODELS_FILEPATH, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
 item_based_knn_model = st.session_state.models_loaded["item_based_knn_model"]
 user_based_knn_model = st.session_state.models_loaded["user_based_knn_model"]
 svd_model = st.session_state.models_loaded["svd_model"] 
