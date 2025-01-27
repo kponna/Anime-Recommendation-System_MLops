@@ -3,11 +3,10 @@ from anime_recommender.loggers.logging import logging
 from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.source.data_ingestion import DataIngestion
 from anime_recommender.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataTransformationConfig,CollaborativeModelConfig,ContentBasedModelConfig
-# ,DataTransformationConfig
 from anime_recommender.source.data_transformation import DataTransformation
-from anime_recommender.source.collaborative_recommenders import CollaborativeModelTrainer
+from anime_recommender.source.collaborative_recommender import CollaborativeModelTrainer
 from anime_recommender.source.content_based_recommender import ContentBasedModelTrainer 
-# from anime_recommender.source.popularity_based_recommenders import PopularityBasedRecommendor
+from anime_recommender.source.top_anime_recommenders import PopularityBasedRecommendor
 
 if __name__ == "__main__":
     try:
@@ -36,18 +35,18 @@ if __name__ == "__main__":
         print(collaborative_model_trainer_artifact)
 
         # Content Based Model Training
-        # content_based_model_trainer_config = ContentBasedModelConfig(training_pipeline_config)
-        # content_based_model_trainer = ContentBasedModelTrainer(content_based_model_trainer_config=content_based_model_trainer_config,data_ingestion_artifact=data_ingestion_artifact)
-        # logging.info("Initiating Content Based Model training.")
-        # content_based_model_trainer_artifact = content_based_model_trainer.initiate_model_trainer()
-        # logging.info("Content Based Model training completed.")
-        # print(content_based_model_trainer_artifact)
+        content_based_model_trainer_config = ContentBasedModelConfig(training_pipeline_config)
+        content_based_model_trainer = ContentBasedModelTrainer(content_based_model_trainer_config=content_based_model_trainer_config,data_ingestion_artifact=data_ingestion_artifact)
+        logging.info("Initiating Content Based Model training.")
+        content_based_model_trainer_artifact = content_based_model_trainer.initiate_model_trainer()
+        logging.info("Content Based Model training completed.")
+        print(content_based_model_trainer_artifact)
 
-        # # Popularity Based Filtering
-        # logging.info("Initiating Popularity based filtering.")
-        # filtering = PopularityBasedRecommendor(data_ingestion_artifact=data_ingestion_artifact)
-        # popularity_recommendations =  filtering.initiate_model_trainer(filter_type='top_avg_rated')
-        # logging.info("Popularity based filtering completed.") 
+        # Popularity Based Filtering
+        logging.info("Initiating Popularity based filtering.")
+        filtering = PopularityBasedRecommendor(data_ingestion_artifact=data_ingestion_artifact)
+        popularity_recommendations =  filtering.initiate_model_trainer(filter_type='top_avg_rated')
+        logging.info("Popularity based filtering completed.") 
 
     except Exception as e:
             raise AnimeRecommendorException(e, sys)

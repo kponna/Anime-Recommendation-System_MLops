@@ -4,7 +4,7 @@ from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.entity.config_entity import ContentBasedModelConfig
 from anime_recommender.entity.artifact_entity import ContentBasedModelArtifact, DataIngestionArtifact
 from anime_recommender.utils.main_utils.utils import load_csv_data
-from anime_recommender.model_trainer.content_filtering import ContentBasedRecommender
+from anime_recommender.model_trainer.content_based_modelling import ContentBasedRecommender
 from anime_recommender.constant import *
  
 class ContentBasedModelTrainer:

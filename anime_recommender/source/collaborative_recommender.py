@@ -4,7 +4,7 @@ from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.entity.config_entity import CollaborativeModelConfig
 from anime_recommender.entity.artifact_entity import DataTransformationArtifact, CollaborativeModelArtifact
 from anime_recommender.utils.main_utils.utils import load_csv_data, save_model, load_object
-from anime_recommender.model_trainer.collaborative_filtering import CollaborativeAnimeRecommender
+from anime_recommender.model_trainer.collaborative_modelling import CollaborativeAnimeRecommender
 
 class CollaborativeModelTrainer:
     """
