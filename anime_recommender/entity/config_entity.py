@@ -40,3 +40,15 @@ class DataTransformationConfig:
         """
         self.data_transformation_dir:str = os.path.join(training_pipeline_config.artifact_dir,DATA_TRANSFORMATION_DIR)
         self.merged_file_path:str = os.path.join(self.data_transformation_dir,DATA_TRANSFORMATION_TRANSFORMED_DATA_DIR,MERGED_FILE_NAME)
+
+
+class ContentBasedModelConfig:
+    """
+    Configuration for model training, including paths for trained models.
+    """
+    def __init__(self,training_pipeline_config:TrainingPipelineConfig):
+        """
+        Initialize model trainer paths.
+        """
+        self.model_trainer_dir:str = os.path.join(training_pipeline_config.artifact_dir,MODEL_TRAINER_DIR_NAME)
+        self.cosine_similarity_model_file_path:str = os.path.join(self.model_trainer_dir,MODEL_TRAINER_CON_TRAINED_MODEL_DIR,MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)

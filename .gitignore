@@ -1,8 +1,6 @@
-ars/
-
+ars/ 
 .env
 Artifacts/
 logs/
-__pycache__/
-
+__pycache__/ 
 model_trainer/
