@@ -40,10 +40,6 @@ item_based_knn_model_path = hf_hub_download(repo_name, "itembasedknn.pkl")
 user_based_knn_model_path = hf_hub_download(repo_name, "userbasedknn.pkl")
 svd_model_path = hf_hub_download(repo_name, "svd.pkl")
 
-# # Load the models into memory
-# with open(cosine_similarity_model_path, "rb") as f:
-#     cosine_similarity_model = joblib.load(f)
-
 with open(item_based_knn_model_path, "rb") as f:
     item_based_knn_model = joblib.load(f)
 
