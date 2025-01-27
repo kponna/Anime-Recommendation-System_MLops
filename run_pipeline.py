@@ -8,6 +8,7 @@ from anime_recommender.source.collaborative_recommender import CollaborativeMode
 from anime_recommender.source.content_based_recommender import ContentBasedModelTrainer 
 from anime_recommender.source.top_anime_recommenders import PopularityBasedRecommendor
 
+
 if __name__ == "__main__":
     try:
         training_pipeline_config = TrainingPipelineConfig()  

@@ -1,10 +1,10 @@
-import sys
 import pandas as pd
 import streamlit as st
-from anime_recommender.content_filtering_models import ContentBasedRecommender
-from anime_recommender.collaborative_filtering_models import CollaborativeAnimeRecommender
-from anime_recommender.popularity_based_filtering import PopularityBasedFiltering
+from anime_recommender.model_trainer.content_based_modelling import ContentBasedRecommender
+from anime_recommender.model_trainer.collaborative_modelling import CollaborativeAnimeRecommender
+from anime_recommender.model_trainer.top_anime_filtering import PopularityBasedFiltering
 import joblib
+from anime_recommender.constant import *
 from huggingface_hub import hf_hub_download
 from datasets import load_dataset
 
@@ -12,14 +12,38 @@ st.set_page_config(page_title="Anime Recommendation System", layout="wide")
 
 if "anime_data" not in st.session_state or "anime_user_ratings" not in st.session_state:
     # Load datasets from Hugging Face (assuming no splits)
-    animedataset = load_dataset("krishnaveni76/Animes", split=None)
-    mergeddataset = load_dataset("krishnaveni76/Anime_UserRatings", split=None)
+    animedataset = load_dataset(ANIME_FILE_PATH, split=None)
+    mergeddataset = load_dataset(ANIMEUSERRATINGS_FILE_PATH, split=None)
 
     # Convert the dataset to Pandas DataFrame
     st.session_state.anime_data = pd.DataFrame(animedataset["train"])
     st.session_state.anime_user_ratings = pd.DataFrame(mergeddataset["train"]) 
 
-    
+# Load models only once
+if "models_loaded" not in st.session_state:
+    st.session_state.models_loaded = {}
+
+    # Define your repository name
+    repo_name = MODELS_FILEPATH
+
+    # Load models
+    st.session_state.models_loaded["cosine_similarity_model"] = hf_hub_download(repo_name, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
+    st.session_state.models_loaded["item_based_knn_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
+    st.session_state.models_loaded["user_based_knn_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
+    st.session_state.models_loaded["svd_model_path"] = hf_hub_download(repo_name, MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
+
+    # Load the models using joblib
+    with open(st.session_state.models_loaded["item_based_knn_model_path"], "rb") as f:
+        st.session_state.models_loaded["item_based_knn_model"] = joblib.load(f)
+
+    with open(st.session_state.models_loaded["user_based_knn_model_path"], "rb") as f:
+        st.session_state.models_loaded["user_based_knn_model"] = joblib.load(f)
+
+    with open(st.session_state.models_loaded["svd_model_path"], "rb") as f:
+        st.session_state.models_loaded["svd_model"] = joblib.load(f)
+
+    print("Models loaded successfully!")
+
 # Access the data from session state
 anime_data = st.session_state.anime_data 
 anime_user_ratings = st.session_state.anime_user_ratings
@@ -31,25 +55,30 @@ st.dataframe(anime_data)
 st.write("Anime User Ratings Data:")
 st.dataframe(anime_user_ratings)
 
-# Define your repository name
-repo_name = "krishnaveni76/anime-recommendation-models"
+# # Define your repository name
+# repo_name = "krishnaveni76/anime-recommendation-models"
 
-# Load models
-cosine_similarity_model_path = hf_hub_download(repo_name, "cosine_similarity.pkl")
-item_based_knn_model_path = hf_hub_download(repo_name, "itembasedknn.pkl")
-user_based_knn_model_path = hf_hub_download(repo_name, "userbasedknn.pkl")
-svd_model_path = hf_hub_download(repo_name, "svd.pkl")
+# # Load models
 
-with open(item_based_knn_model_path, "rb") as f:
-    item_based_knn_model = joblib.load(f)
+# item_based_knn_model_path = hf_hub_download(repo_name, MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
+# user_based_knn_model_path = hf_hub_download(repo_name, MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
+# svd_model_path = hf_hub_download(repo_name,MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
 
-with open(user_based_knn_model_path, "rb") as f:
-    user_based_knn_model = joblib.load(f)
+# with open(item_based_knn_model_path, "rb") as f:
+#     item_based_knn_model = joblib.load(f)
 
-with open(svd_model_path, "rb") as f:
-    svd_model = joblib.load(f)
+# with open(user_based_knn_model_path, "rb") as f:
+#     user_based_knn_model = joblib.load(f)
 
-# Now you can use these models for recommendations
+# with open(svd_model_path, "rb") as f:
+#     svd_model = joblib.load(f)
+
+
+# Access the models from session state
+cosine_similarity_model_path = hf_hub_download(repo_name, MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME)
+item_based_knn_model = st.session_state.models_loaded["item_based_knn_model"]
+user_based_knn_model = st.session_state.models_loaded["user_based_knn_model"]
+svd_model = st.session_state.models_loaded["svd_model"] 
 print("Models loaded successfully!")
     
 # Streamlit UI
@@ -113,8 +142,7 @@ if app_selector == "Content-Based Recommender":
 elif app_selector == "Collaborative Recommender":
     st.title("Collaborative Recommender System")
     
-    try: 
-        
+    try:  
         # Sidebar for choosing the collaborative filtering method
         collaborative_method = st.sidebar.selectbox(
             "Choose a collaborative filtering method:", 

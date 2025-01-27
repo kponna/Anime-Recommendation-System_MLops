@@ -1,18 +1,16 @@
-import os 
 """
 Defining common constant variables for training pipeline
 """
-PIPELINE_NAME: str = "AnimeRecommendor"
+PIPELINE_NAME: str = "AnimeRecommender"
 ARTIFACT_DIR: str = "Artifacts"
 ANIME_FILE_NAME: str = "Animes.csv"
 RATING_FILE_NAME:str = "UserRatings.csv"
-MERGED_FILE_NAME:str = "Anime_UserRatings.csv"
-ZIP_FILE_PATH:str = 'datasets/archive.zip'
-DATASETS_FILE_PATH:str = "datasets"
+MERGED_FILE_NAME:str = "Anime_UserRatings.csv" 
 
 ANIME_FILE_PATH:str = "krishnaveni76/Animes"
 RATING_FILE_PATH:str = "krishnaveni76/UserRatings"
 ANIMEUSERRATINGS_FILE_PATH:str = "krishnaveni76/Anime_UserRatings"
+MODELS_FILEPATH = "krishnaveni76/anime-recommendation-models"
 
 """
 Data Ingestion related constant start with DATA_INGESTION VAR NAME
@@ -39,5 +37,4 @@ MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME: str = "userbasedknn.pkl"
 
 MODEL_TRAINER_CON_TRAINED_MODEL_DIR:str = "content_based_recommenders"
 MODEL_TRAINER_COSINESIMILARITY_MODEL_NAME:str = "cosine_similarity.pkl" 
-
-MODEL_TRAINER_POP_TRAINED_MODEL_DIR:str = "popularity_based_recommenders" 
+ 
