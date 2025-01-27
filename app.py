@@ -50,10 +50,10 @@ anime_user_ratings = st.session_state.anime_user_ratings
 
 # Display dataset info
 st.write("Anime Data:")
-st.dataframe(anime_data)
+st.dataframe(anime_data.head())
  
 st.write("Anime User Ratings Data:")
-st.dataframe(anime_user_ratings)
+st.dataframe(anime_user_ratings.head())
 
 # # Define your repository name
 # models_repo= MODELS_FILEPATH
