@@ -6,4 +6,5 @@ transformers
 huggingface_hub
 datasets
 scikit-surprise
+pytest
 # -e .
