@@ -4,7 +4,7 @@ from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.entity.config_entity import CollaborativeModelConfig
 from anime_recommender.entity.artifact_entity import DataTransformationArtifact, CollaborativeModelArtifact
 from anime_recommender.utils.main_utils.utils import load_csv_data, save_model, load_object
-from anime_recommender.model_trainer.collaborative_modelling import CollaborativeAnimeRecommender
+from anime_recommender.source.collaborative_modelling import CollaborativeAnimeRecommender
 
 class CollaborativeModelTrainer:
     """
@@ -21,8 +21,7 @@ class CollaborativeModelTrainer:
         try:
             logging.info("Loading transformed data...")
             df = load_csv_data(self.data_transformation_artifact.merged_file_path)
-            recommender = CollaborativeAnimeRecommender(df)
-            # recommender.print_unique_user_ids()
+            recommender = CollaborativeAnimeRecommender(df) 
             if model_type == 'svd':
                 logging.info("Training and saving SVD model...")
                 recommender.train_svd()

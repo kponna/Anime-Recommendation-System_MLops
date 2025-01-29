@@ -1,12 +1,12 @@
 import sys
 from anime_recommender.loggers.logging import logging
 from anime_recommender.exception.exception import AnimeRecommendorException
-from anime_recommender.source.data_ingestion import DataIngestion
+from anime_recommender.model_trainer.data_ingestion import DataIngestion
 from anime_recommender.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataTransformationConfig,CollaborativeModelConfig,ContentBasedModelConfig
-from anime_recommender.source.data_transformation import DataTransformation
-from anime_recommender.source.collaborative_recommender import CollaborativeModelTrainer
-from anime_recommender.source.content_based_recommender import ContentBasedModelTrainer 
-from anime_recommender.source.top_anime_recommenders import PopularityBasedRecommendor
+from anime_recommender.model_trainer.data_transformation import DataTransformation
+from anime_recommender.model_trainer.collaborative_recommender import CollaborativeModelTrainer
+from anime_recommender.model_trainer.content_based_recommender import ContentBasedModelTrainer 
+from anime_recommender.model_trainer.top_anime_recommenders import PopularityBasedRecommendor
 
 
 if __name__ == "__main__":
@@ -46,7 +46,7 @@ if __name__ == "__main__":
         # Popularity Based Filtering
         logging.info("Initiating Popularity based filtering.")
         filtering = PopularityBasedRecommendor(data_ingestion_artifact=data_ingestion_artifact)
-        popularity_recommendations =  filtering.initiate_model_trainer(filter_type='top_avg_rated')
+        popularity_recommendations = filtering.initiate_model_trainer(filter_type='top_avg_rated')
         logging.info("Popularity based filtering completed.") 
 
     except Exception as e:

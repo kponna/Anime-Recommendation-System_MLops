@@ -1,8 +1,8 @@
 import pandas as pd
 import streamlit as st
-from anime_recommender.model_trainer.content_based_modelling import ContentBasedRecommender
-from anime_recommender.model_trainer.collaborative_modelling import CollaborativeAnimeRecommender
-from anime_recommender.model_trainer.top_anime_filtering import PopularityBasedFiltering
+from anime_recommender.source.content_based_modelling import ContentBasedRecommender
+from anime_recommender.source.collaborative_modelling import CollaborativeAnimeRecommender
+from anime_recommender.source.top_anime_filtering import PopularityBasedFiltering
 import joblib
 from anime_recommender.constant import *
 from huggingface_hub import hf_hub_download
@@ -187,7 +187,7 @@ elif app_selector == "Top Anime Recommender":
             ]
         )
         
-        n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=50, value=10)
+        n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=500 , value=10)
         
         if st.button("Get Recommendations"):
             # Load the popularity-based recommender

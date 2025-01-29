@@ -10,6 +10,7 @@ class DataIngestionArtifact:
 class DataTransformationArtifact:
     merged_file_path:str
 
+
 @dataclass
 class CollaborativeModelArtifact:
     svd_file_path: Optional[str] = None

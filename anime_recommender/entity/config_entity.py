@@ -15,6 +15,7 @@ class TrainingPipelineConfig:
         self.artifact_dir = os.path.join(ARTIFACT_DIR, timestamp)
         self.model_dir=os.path.join("final_model")
         self.timestamp: str = timestamp
+    
 
 class DataIngestionConfig:
     """
@@ -53,7 +54,7 @@ class CollaborativeModelConfig:
         self.svd_trained_model_file_path:str = os.path.join(self.model_trainer_dir,MODEL_TRAINER_COL_TRAINED_MODEL_DIR,MODEL_TRAINER_SVD_TRAINED_MODEL_NAME)
         self.user_knn_trained_model_file_path:str = os.path.join(self.model_trainer_dir,MODEL_TRAINER_COL_TRAINED_MODEL_DIR,MODEL_TRAINER_USER_KNN_TRAINED_MODEL_NAME)
         self.item_knn_trained_model_file_path:str = os.path.join(self.model_trainer_dir,MODEL_TRAINER_COL_TRAINED_MODEL_DIR,MODEL_TRAINER_ITEM_KNN_TRAINED_MODEL_NAME)
-
+      
 class ContentBasedModelConfig:
     """
     Configuration for model training, including paths for trained models.
