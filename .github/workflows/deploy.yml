@@ -4,56 +4,126 @@ on:
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - main
+    paths-ignore:
+      - 'README.md'
+
+permissions:
+  contents: read
+  packages: write
 
 jobs:
-  build:
+  integration:
+    name: Continuous Integration
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
+      - name: Lint code
+        run: echo "Linting repository (Add a real linter here)"
 
-      - name: Cache dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+      - name: Run unit tests
+        run: echo "Running unit tests (Add actual tests here)"
 
-      - name: Install dependencies
+  build-and-push-docker-image:
+    name: Build and Push to GHCR
+    needs: integration
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Log in to GitHub Container Registry (GHCR)
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and tag Docker image
         run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest  # Ensure pytest is installed
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/streamlit-app"
+          docker build -t $IMAGE_NAME:latest .
+          
 
-    #   - name: Run Tests
-    #     run: python -m pytest  # Run tests correctly
+      - name: Push Docker image to GHCR
+        run: |
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/streamlit-app"
+          docker push $IMAGE_NAME:latest
+          docker push $IMAGE_NAME:${{ github.sha }}
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
+    name: Deploy to Self-Hosted Runner
+    needs: build-and-push-docker-image
+    runs-on: self-hosted
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10'
-
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run Streamlit App
+      - name: Pull latest image from GHCR
         run: |
-          streamlit run app.py --server.headless true
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/streamlit-app"
+          docker pull $IMAGE_NAME:latest
+
+      - name: Stop and remove existing container
+        run: |
+          docker ps -q --filter "name=streamlit-container" | grep -q . && docker stop streamlit-container && docker rm streamlit-container || echo "No existing container"
+
+      - name: Run new container
+        run: |
+          IMAGE_NAME="ghcr.io/${{ github.repository_owner }}/streamlit-app"
+          docker run -d -p 8501:8501 --name streamlit-container $IMAGE_NAME:latest
+
+        
+# name: Anime Recommender CI/CD
+
+# on:
+#   push:
+#     branches:
+#       - main
+#   pull_request:
+#     branches:
+#       - main
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
+
+#       - name: Cache dependencies
+#         uses: actions/cache@v3
+#         with:
+#           path: ~/.cache/pip
+#           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+#           restore-keys: |
+#             ${{ runner.os }}-pip-
+
+#       - name: Install dependencies
+#         run: |
+#           python -m pip install --upgrade pip
+#           pip install -r requirements.txt
+#           pip install pytest  # Ensure pytest is installed
+
+#     #   - name: Run Tests
+#     #     run: python -m pytest  # Run tests correctly
+
+#   deploy:
+#     needs: build
+#     runs-on: ubuntu-latest
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+
+#       - name: Set up Python
+#         uses: actions/setup-python@v4
+#         with:
+#           python-version: '3.10'
+
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
+
+#       - name: Run Streamlit App
+#         run: |
+#           streamlit run app.py --server.headless true
