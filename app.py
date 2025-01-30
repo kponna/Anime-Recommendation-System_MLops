@@ -127,7 +127,7 @@ elif app_selector == "Collaborative Recommender":
         )
 
         # User input
-        if collaborative_method == "SVD Collaborative Filtering" or collaborative_method == "User-Based Collaborative Filtering": 
+        if collaborative_method == "Surprise Collaborative Filtering" or collaborative_method == "User-Based Collaborative Filtering": 
             user_ids = anime_user_ratings['user_id'].unique()  
             user_id = st.selectbox("Choose a user, and we'll show you animes they'd recommend!", user_ids) 
             n_recommendations = st.slider("Number of Recommendations:", min_value=1, max_value=50, value=10)
@@ -140,7 +140,7 @@ elif app_selector == "Collaborative Recommender":
         if st.button("Get Recommendations"):
             # Load the recommender
             recommender = CollaborativeAnimeRecommender(anime_user_ratings) 
-            if collaborative_method == "SVD Collaborative Filtering": 
+            if collaborative_method == "Surprise Collaborative Filtering": 
                 recommendations = recommender.get_svd_recommendations(user_id, n=n_recommendations, svd_model=svd_model)  
             elif collaborative_method == "User-Based Collaborative Filtering": 
                 recommendations = recommender.get_user_based_recommendations(user_id, n_recommendations=n_recommendations, knn_user_model=user_based_knn_model)

@@ -13,3 +13,7 @@ license: apache-2.0
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 # Welcome to Anime Recommendation system
+
+app runs on http://172.19.94.232:8501
+ 
+(anime) karthikponna@KittuKarthik:~/actions-runner$ ./run.sh
