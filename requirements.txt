@@ -6,9 +6,9 @@ transformers
 huggingface_hub
 datasets
 scikit-surprise
-setuptools
 wordcloud
 seaborn
 matplotlib
 squarify
+# tensorflow
 # -e .
