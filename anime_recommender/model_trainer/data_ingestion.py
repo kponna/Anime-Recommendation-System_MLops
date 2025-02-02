@@ -1,4 +1,3 @@
-import os
 import sys
 import pandas as pd
 from datasets import load_dataset
@@ -9,13 +8,34 @@ from anime_recommender.entity.artifact_entity import DataIngestionArtifact
 from anime_recommender.utils.main_utils.utils import export_data_to_dataframe
 
 class DataIngestion:
+    """
+    A class responsible for data ingestion in the anime recommender system.
+
+    This class fetches data from Hugging Face datasets, converts it into pandas DataFrame format, 
+    and exports the processed data to storage for further use in the pipeline.
+    """
     def __init__(self, data_ingestion_config: DataIngestionConfig):
+        """
+        Initializes the DataIngestion class with the provided configuration.
+
+        Args:
+            data_ingestion_config (DataIngestionConfig): Configuration settings for data ingestion. 
+        """
         try:
             self.data_ingestion_config = data_ingestion_config
         except Exception as e:
             raise AnimeRecommendorException(e, sys)
 
     def fetch_data_from_huggingface(self, dataset_path: str, split: str = None) -> pd.DataFrame:
+        """
+        Fetches a dataset from Hugging Face and converts it into a pandas DataFrame. 
+        Args:
+            dataset_path (str): The path to the Hugging Face dataset.
+            split (str, optional): The dataset split to be fetched (e.g., 'train', 'test'). Defaults to None.
+
+        Returns:
+            pd.DataFrame: The dataset converted into a pandas DataFrame. 
+        """
         try:
             logging.info(f"Fetching data from Hugging Face dataset: {dataset_path}")
             # Load dataset from Hugging Face
@@ -37,6 +57,11 @@ class DataIngestion:
             raise AnimeRecommendorException(e, sys)
 
     def ingest_data(self) -> DataIngestionArtifact:
+        """
+        Orchestrates the data ingestion process, fetching datasets and saving them to the feature store. 
+        Returns:
+            DataIngestionArtifact: An artifact containing paths to the ingested datasets. 
+        """
         try:
             # Load anime and rating data from Hugging Face datasets
             anime_df = self.fetch_data_from_huggingface(self.data_ingestion_config.anime_filepath)

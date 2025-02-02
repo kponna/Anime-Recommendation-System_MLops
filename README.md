@@ -12,3 +12,5 @@ karthikponna@KittuKarthik:~/actions-runner$ ./run.sh     # Start/Wake the github
 
 
 app runs on http://172.19.94.232:8501
+
+https://animerecommedationsystem.streamlit.app/

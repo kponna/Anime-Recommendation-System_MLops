@@ -1,7 +1,6 @@
 import sys 
 import numpy as np
-import pandas as pd
-
+import pandas as pd 
 from anime_recommender.loggers.logging import logging
 from anime_recommender.exception.exception import AnimeRecommendorException
 from anime_recommender.utils.main_utils.utils import export_data_to_dataframe
@@ -15,8 +14,7 @@ class DataTransformation:
     """
     def __init__(self,data_ingestion_artifact:DataIngestionArtifact,data_transformation_config:DataTransformationConfig):
         """
-        Initializes the DataTransformation class with the given data ingestion and configuration artifacts.
-        
+        Initializes the DataTransformation class with the given data ingestion and configuration artifacts. 
         Args:
             data_ingestion_artifact (DataIngestionArtifact): The artifact containing ingested data paths.
             data_transformation_config (DataTransformationConfig): Configuration object for data transformation.
@@ -30,11 +28,9 @@ class DataTransformation:
     @staticmethod
     def read_data(file_path)->pd.DataFrame:
         """
-        Reads data from a CSV file.
-
+        Reads data from a CSV file. 
         Args:
-            file_path (str): Path to the CSV file.
-
+            file_path (str): Path to the CSV file. 
         Returns:
             pd.DataFrame: The DataFrame containing the data from the CSV file. 
         """
@@ -46,12 +42,10 @@ class DataTransformation:
     @staticmethod
     def merge_data(anime_df: pd.DataFrame, rating_df: pd.DataFrame) -> pd.DataFrame:
         """
-        Merges the anime and rating DataFrames on 'anime_id'.
-
+        Merges the anime and rating DataFrames on 'anime_id'. 
         Args:
             anime_df (pd.DataFrame): DataFrame containing anime information.
-            rating_df (pd.DataFrame): DataFrame containing user rating information.
-
+            rating_df (pd.DataFrame): DataFrame containing user rating information. 
         Returns:
             pd.DataFrame: Merged DataFrame on 'anime_id'.
         """

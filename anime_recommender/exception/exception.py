@@ -2,7 +2,7 @@ import sys
 
 class AnimeRecommendorException(Exception):
     """
-    Custom exception class for handling errors in the Energy Generation Prediction project.
+    Custom exception class for handling errors in the Anime recommendation system project.
 
     This class captures the error message, file name, and line number where an exception occurred.
     It is useful for debugging and identifying the source of the error in a structured way.

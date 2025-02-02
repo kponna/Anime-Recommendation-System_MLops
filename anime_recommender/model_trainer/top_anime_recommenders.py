@@ -7,14 +7,37 @@ from anime_recommender.source.top_anime_filtering import PopularityBasedFilterin
 
 
 class PopularityBasedRecommendor: 
-
+    """
+    A class that provides anime recommendations based on different popularity criteria. 
+    """
     def __init__(self,data_ingestion_artifact = DataIngestionArtifact):
+        """
+        Initializes the PopularityBasedRecommendor with the ingested anime dataset.
+
+        Args:
+            data_ingestion_artifact (DataIngestionArtifact): An artifact containing the feature store file paths. 
+        """
         try:
             self.data_ingestion_artifact = data_ingestion_artifact
         except Exception as e:
             raise AnimeRecommendorException(e,sys)
         
     def initiate_model_trainer(self,filter_type:str):
+        """
+        Trains the popularity-based recommender model and logs the top anime recommendations 
+        based on the specified filter type.
+
+        Args:
+            filter_type (str): The type of filtering to apply. 
+                                Options include:
+                                    - 'popular_animes': Most popular anime based on user engagement.
+                                    - 'top_ranked_animes': Highest ranked anime.
+                                    - 'overall_top_rated_animes': Overall top-rated anime.
+                                    - 'favorite_animes': Most favorited anime.
+                                    - 'top_animes_members': Anime with the highest number of members.
+                                    - 'popular_anime_among_members': Most popular anime among members.
+                                    - 'top_avg_rated': Anime with the highest average ratings.  
+        """
         try:
             logging.info("Loading transformed data...")
             df = load_csv_data(self.data_ingestion_artifact.feature_store_anime_file_path)

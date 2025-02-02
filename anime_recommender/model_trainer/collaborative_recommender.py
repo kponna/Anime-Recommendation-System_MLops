@@ -8,9 +8,21 @@ from anime_recommender.source.collaborative_modelling import CollaborativeAnimeR
 
 class CollaborativeModelTrainer:
     """
-    Class to train the model, track metrics, and save the trained model.
+    Trains and saves collaborative filtering recommendation models.
+
+    This class supports three types of models:
+    - Singular Value Decomposition (SVD)
+    - Item-based K-Nearest Neighbors (KNN)
+    - User-based K-Nearest Neighbors (KNN)
     """
     def __init__(self, collaborative_model_trainer_config: CollaborativeModelConfig, data_transformation_artifact: DataTransformationArtifact):
+        """
+        Initializes the CollaborativeModelTrainer with configuration and transformed data.
+
+        Args:
+            collaborative_model_trainer_config (CollaborativeModelConfig): Configuration settings for model training.
+            data_transformation_artifact (DataTransformationArtifact): Data artifact containing the preprocessed dataset path.
+        """
         try:
             self.collaborative_model_trainer_config = collaborative_model_trainer_config
             self.data_transformation_artifact = data_transformation_artifact
@@ -18,6 +30,15 @@ class CollaborativeModelTrainer:
             raise AnimeRecommendorException(e, sys)
 
     def initiate_model_trainer(self, model_type: str) -> CollaborativeModelArtifact:
+        """
+        Trains and saves the specified collaborative filtering model. 
+        Args:
+            model_type (str): The type of model to train. 
+                              Choices: 'svd', 'item_knn', 'user_knn'.
+
+        Returns:
+            CollaborativeModelArtifact: Object containing the file path of the trained model. 
+        """
         try:
             logging.info("Loading transformed data...")
             df = load_csv_data(self.data_transformation_artifact.merged_file_path)

@@ -7,10 +7,18 @@ from anime_recommender.utils.main_utils.utils import load_csv_data
 from anime_recommender.source.content_based_modelling import ContentBasedRecommender
 from anime_recommender.constant import *
  
-class ContentBasedModelTrainer:
-    """Class to train the model, track metrics, and save the trained model."""
-
+class ContentBasedModelTrainer:  
+    """
+    A class responsible for training and saving the content-based recommender model. 
+    """
     def __init__(self, content_based_model_trainer_config: ContentBasedModelConfig, data_ingestion_artifact: DataIngestionArtifact):
+        """
+        Initializes the ContentBasedModelTrainer with configuration and data ingestion artifacts.
+
+        Args:
+            content_based_model_trainer_config (ContentBasedModelConfig): Configuration settings for model training.
+            data_ingestion_artifact (DataIngestionArtifact): Data ingestion artifact containing the dataset path.
+        """
         try:
             self.content_based_model_trainer_config = content_based_model_trainer_config
             self.data_ingestion_artifact = data_ingestion_artifact
@@ -18,6 +26,13 @@ class ContentBasedModelTrainer:
             raise AnimeRecommendorException(e, sys)
 
     def initiate_model_trainer(self) -> ContentBasedModelArtifact:
+        """
+        Trains the content-based recommender model using TF-IDF and cosine similarity,
+        saves the trained model, and retrieves recommendations.
+
+        Returns:
+            ContentBasedModelArtifact: Object containing the path to the saved content-based model. 
+        """
         try:
             logging.info("Loading ingested data...")
             df = load_csv_data(self.data_ingestion_artifact.feature_store_anime_file_path)

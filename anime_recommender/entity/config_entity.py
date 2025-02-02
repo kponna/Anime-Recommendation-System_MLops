@@ -13,17 +13,16 @@ class TrainingPipelineConfig:
         timestamp = timestamp.strftime("%m_%d_%Y_%H_%M_%S")
         self.pipeline_name = PIPELINE_NAME
         self.artifact_dir = os.path.join(ARTIFACT_DIR, timestamp)
-        self.model_dir=os.path.join("final_model")
         self.timestamp: str = timestamp
     
 
 class DataIngestionConfig:
     """
-    Configuration for data ingestion, including paths for feature store, train, test, and validation files.
+    Configuration for data ingestion, including paths for feature store.
     """
     def __init__(self, training_pipeline_config: TrainingPipelineConfig):
         """
-        Initialize data ingestion paths and parameters.
+        Initialize data ingestion paths.
         """
         self.data_ingestion_dir: str = os.path.join(training_pipeline_config.artifact_dir, DATA_INGESTION_DIR_NAME)
         self.feature_store_anime_file_path: str = os.path.join(self.data_ingestion_dir, DATA_INGESTION_FEATURE_STORE_DIR, ANIME_FILE_NAME) 
@@ -33,7 +32,7 @@ class DataIngestionConfig:
 
 class DataTransformationConfig:
     """
-    Configuration for data transformation, including paths for transformed data and preprocessing objects.
+    Configuration for data transformation, including paths for transformed data.
     """
     def __init__(self,training_pipeline_config:TrainingPipelineConfig):
         """
