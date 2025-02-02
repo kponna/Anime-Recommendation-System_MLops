@@ -17,7 +17,7 @@ class PopularityBasedFiltering:
             logging.info("Initializing PopularityBasedFiltering class")
             self.df = df
             self.df['average_rating'] = pd.to_numeric(self.df['average_rating'], errors='coerce')
-            self.df['average_rating'].fillna(self.df['average_rating'].median(), inplace=True)
+            self.df['average_rating'].fillna(self.df['average_rating'].median())
         except Exception as e:
             logging.error("Error initializing PopularityBasedFiltering: %s", str(e))
             raise AnimeRecommendorException(e, sys)
@@ -85,7 +85,7 @@ class PopularityBasedFiltering:
         logging.info("Fetching top %d highest average-rated animes", n)
         self.df['average_rating'] = pd.to_numeric(self.df['average_rating'], errors='coerce')
         median_rating = self.df['average_rating'].median()
-        self.df['average_rating'].fillna(median_rating, inplace=True)
+        self.df['average_rating'].fillna(median_rating)
         top_animes = (
             self.df.drop_duplicates(subset='name')
                     .nlargest(n, 'average_rating')[['name', 'average_rating', 'image url', 'genres']]

@@ -7,7 +7,7 @@ from anime_recommender.utils.main_utils.utils import export_data_to_dataframe
 from anime_recommender.constant import *
 from anime_recommender.entity.config_entity import DataTransformationConfig
 from anime_recommender.entity.artifact_entity import DataIngestionArtifact,DataTransformationArtifact
- 
+
 class DataTransformation:
     """
     Class for handling data transformation for energy generation models.

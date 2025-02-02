@@ -1,12 +1,12 @@
 import sys
 from anime_recommender.loggers.logging import logging
 from anime_recommender.exception.exception import AnimeRecommendorException
-from anime_recommender.model_trainer.data_ingestion import DataIngestion
+from anime_recommender.components.data_ingestion import DataIngestion
 from anime_recommender.entity.config_entity import TrainingPipelineConfig,DataIngestionConfig,DataTransformationConfig,CollaborativeModelConfig,ContentBasedModelConfig
-from anime_recommender.model_trainer.data_transformation import DataTransformation
-from anime_recommender.model_trainer.collaborative_recommender import CollaborativeModelTrainer
-from anime_recommender.model_trainer.content_based_recommender import ContentBasedModelTrainer 
-from anime_recommender.model_trainer.top_anime_recommenders import PopularityBasedRecommendor
+from anime_recommender.components.data_transformation import DataTransformation
+from anime_recommender.components.collaborative_recommender import CollaborativeModelTrainer
+from anime_recommender.components.content_based_recommender import ContentBasedModelTrainer 
+from anime_recommender.components.top_anime_recommenders import PopularityBasedRecommendor
 
 
 if __name__ == "__main__":
