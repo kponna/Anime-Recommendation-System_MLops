@@ -3,7 +3,7 @@
 This is an **Anime Recommendation System** that combines multiple recommendation techniques such as **Collaborative Filtering**, **Content-Based Filtering**, and **Popularity-Based Filtering**. The system is designed to continuously ingest and transform data and is **dockerized** for easier deployment. Additionally, **GitHub Actions** is used for **Continuous Integration/Continuous Deployment (CI/CD)** of the **Streamlit** app that serves the recommendations. 
 The system provides **personalized anime recommendations** based on user preferences and anime features.  
  
-## 🚀 Technologies Used
+## Tech Stacks 🛠️
 
 - **Python**: Main programming language used for building recommendation algorithms and Streamlit app.
 - **Docker**: Containerizes the application to ensure a consistent environment across different platforms.
@@ -11,7 +11,8 @@ The system provides **personalized anime recommendations** based on user prefere
 - **GitHub Actions**: For Continuous Integration and Continuous Deployment (CI/CD) of the application. 
 - **Hugging Face**: The datasets and pretrained models used for getting  recommendations is ingested from Hugging Face, ensuring access to high-quality.
 
-## Pipeline Overview  
+## Pipeline 🚀
+
 The pipeline follows a structured sequence of steps to build an **Anime Recommendation System**, including data ingestion, transformation, and multiple recommendation models.
 
 ### 1. Data Ingestion 📥  

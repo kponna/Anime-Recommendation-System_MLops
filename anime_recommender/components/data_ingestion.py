@@ -75,8 +75,7 @@ class DataIngestion:
             dataingestionartifact = DataIngestionArtifact(
                 feature_store_anime_file_path=self.data_ingestion_config.feature_store_anime_file_path,
                 feature_store_userrating_file_path=self.data_ingestion_config.feature_store_userrating_file_path
-            )
-
+            ) 
             return dataingestionartifact
 
         except Exception as e:

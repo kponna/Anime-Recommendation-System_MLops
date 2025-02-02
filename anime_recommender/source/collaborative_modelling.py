@@ -31,8 +31,7 @@ class CollaborativeAnimeRecommender:
             self.prepare_data()
         except Exception as e:
             raise AnimeRecommendorException(e)
- 
-
+  
     def prepare_data(self):
         """
         Prepares data for training.
