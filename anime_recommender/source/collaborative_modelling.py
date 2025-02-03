@@ -65,7 +65,7 @@ class CollaborativeAnimeRecommender:
         Trains an item-based KNN model using cosine similarity.
         """
         try:
-            logging.info("Training KNN model")
+            logging.info("Training KNN model....")
             item_user_matrix = csr_matrix(self.anime_pivot.values)
             self.knn_item_based = NearestNeighbors(metric='cosine', algorithm='brute')
             self.knn_item_based.fit(item_user_matrix)

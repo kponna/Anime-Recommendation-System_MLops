@@ -1,7 +1,13 @@
 # Anime Recommendation System
 
-This is an **Anime Recommendation System** that combines multiple recommendation techniques such as **Collaborative Filtering**, **Content-Based Filtering**, and **Popularity-Based Filtering**. The system is designed to continuously ingest and transform data and is **dockerized** for easier deployment. Additionally, **GitHub Actions** is used for **Continuous Integration/Continuous Deployment (CI/CD)** of the **Streamlit** app that serves the recommendations. 
-The system provides **personalized anime recommendations** based on user preferences and anime features.  
+This **Anime Recommendation System** leverages multiple recommendation techniques, including **Collaborative Filtering**, **Content-Based Filtering**, and **Popularity-Based Filtering**, to provide personalized anime recommendations.
+
+We used the **AnimeList 2023 dataset**, but to optimize computational cost and storage, we included only animes with an average rating above **6.0**. The system is designed for **continuous data ingestion and transformation** and is fully **dockerized** for seamless deployment.
+
+Additionally, **GitHub Actions** automates the **CI/CD** pipeline for deploying the **Streamlit** app, making it easy to update and serve recommendations.
+
+## Live Demo 🤗
+[Anime Recommendation System App](https://huggingface.co/spaces/krishnaveni76/Anime-Recommendation-System) 
  
 ## Tech Stacks 🛠️
 
@@ -11,7 +17,7 @@ The system provides **personalized anime recommendations** based on user prefere
 - **GitHub Actions**: For Continuous Integration and Continuous Deployment (CI/CD) of the application. 
 - **Hugging Face**: The datasets and pretrained models used for getting  recommendations is ingested from Hugging Face, ensuring access to high-quality.
 
-## Pipeline 🚀
+## Pipeline ⛓️
 
 The pipeline follows a structured sequence of steps to build an **Anime Recommendation System**, including data ingestion, transformation, and multiple recommendation models.
 
@@ -30,6 +36,8 @@ The pipeline follows a structured sequence of steps to build an **Anime Recommen
   - **User-Based K-Nearest Neighbors (User-KNN)**: Suggests anime that users with similar preferences have liked.  
 - The chosen model is trained using **transformed data**, and the final trained model is stored as an artifact.  
 - Once trained, it can generate recommendations for users or anime titles.  
+
+![assets/collaborative and contentbased filtering.png](assets/collaborative_and_contentbased_filtering.png)
 
 ### 4. Content-Based Filtering 🎭  
 - Uses extracted anime features like genres to train a **Content-Based Recommendation Model**.  
@@ -51,6 +59,8 @@ The system applies different filters to sort anime based on:
 
 ### Artifacts Storage 📂  
 All intermediate and final outputs, including processed datasets and trained models, are first saved locally in the Artifacts folder. These artifacts are then uploaded to Hugging Face for efficient storage and easy access. When building the Streamlit app, these datasets and trained models are retrieved directly from Hugging Face, ensuring seamless integration and scalability.
+ 
+![assets/Artifacts.png](assets/artifacts.png)
 
 - The datasets used in this project are available at:  
     - [Anime and User Ratings](https://www.kaggle.com/datasets/krishnaveniponna/anime-and-ratings-list-dataset-2023)  
@@ -58,7 +68,9 @@ All intermediate and final outputs, including processed datasets and trained mod
 - You can find the Artifacts of trained models here:  
     - [Pre-trained Models](https://huggingface.co/krishnaveni76/anime-recommendation-models)
    
-## 🚀 CI/CD Pipeline Integration  
+## CI/CD Pipeline Integration 🔄
+
+![assets/Github Actions.png](assets/github_actions.png)
 
 To ensure seamless updates and **automated deployment**, this project utilizes **GitHub Actions** for Continuous Integration and Continuous Deployment (CI/CD). The pipeline is structured as follows:
 
@@ -108,10 +120,42 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Running the Pipeline 🔄
+To process the data and train the recommendation models, run the following command:
+
+```bash 
+python run_pipeline.py
+```
+This will execute the pipeline, ingest and transform data, and train the models before making recommendations.
+
+### Running with Docker 🐋
+To run the application inside a Docker container, follow these steps:
+
+1. Build the Docker Image 
+```bash
+docker build -t anime-recommendation-system .
+```
+2. Run the Docker Container 
+```bash
+docker run -p 8501:8501 anime-recommendation-system
+``` 
+This will start the Streamlit application, which can be accessed at `http://localhost:8501`.
+
+### Running the Streamlit App 💻
+
+Once the dependencies are installed, you can start the Streamlit app by running:
+
+```bash 
+streamlit run app.py
+```
+This will launch the Anime Recommendation System in your browser. 
+
+![assets/app.png](assets/app.png)
+ 
 ### Contact 📫
 For any questions, suggestions, or collaboration opportunities, feel free to reach out:
 
-📧Email: ponnakrishnaveni76@gmail.com 
+📧 Email: ponnakrishnaveni76@gmail.com 
 
 🌐 LinkedIn: [Krishnaveni Ponna](https://www.linkedin.com/in/krishnaveni-ponna-28ab93239)
 

@@ -43,7 +43,7 @@ class TrainingPipeline:
             data_ingestion_config = DataIngestionConfig(self.training_pipeline_config)
             data_ingestion = DataIngestion(data_ingestion_config=data_ingestion_config)
             data_ingestion_artifact = data_ingestion.ingest_data()
-            logging.info(f"Data Ingestion completed: {data_ingestion_artifact}")
+            logging.info(f"Data Ingestion completed.")
             return data_ingestion_artifact
         except Exception as e:
             raise AnimeRecommendorException(e, sys)
@@ -62,7 +62,7 @@ class TrainingPipeline:
                 data_transformation_config=data_transformation_config
             )
             data_transformation_artifact = data_transformation.initiate_data_transformation()
-            logging.info(f"Data Transformation completed: {data_transformation_artifact}")
+            logging.info(f"Data Transformation completed.")
             return data_transformation_artifact
         except Exception as e:
             raise AnimeRecommendorException(e, sys)
@@ -141,12 +141,3 @@ class TrainingPipeline:
             logging.info("Training Pipeline executed successfully.")
         except Exception as e:
             raise AnimeRecommendorException(e, sys)
-
- 
-if __name__ == "__main__":
-    try:
-        pipeline = TrainingPipeline()
-        pipeline.run_pipeline()
-    except Exception as e:
-        logging.error(f"Pipeline execution failed: {str(e)}")
-        raise AnimeRecommendorException(e, sys)

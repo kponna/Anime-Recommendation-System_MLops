@@ -1,5 +1,4 @@
 anime/ 
 .env
 Artifacts/
-logs/
 __pycache__/
