@@ -1,5 +1,7 @@
 # Anime Recommendation System
 
+![assets/project_architecture.gif](assets/project_architecture.gif) 
+
 This **Anime Recommendation System** leverages multiple recommendation techniques, including **Collaborative Filtering**, **Content-Based Filtering**, and **Popularity-Based Filtering**, to provide personalized anime recommendations.
 
 We used the **AnimeList 2023 dataset**, but to optimize computational cost and storage, we included only animes with an average rating above **6.0**. The system is designed for **continuous data ingestion and transformation** and is fully **dockerized** for seamless deployment.
